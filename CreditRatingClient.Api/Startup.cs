@@ -1,3 +1,5 @@
+using System;
+using CreditRatingService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +20,8 @@ namespace CreditRatingClient.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddGrpcClient<Greeter.GreeterClient>(o => o.Address = new Uri("https://localhost:5001"));
+            services.AddGrpcClient<CreditRatingCheck.CreditRatingCheckClient>(o => o.Address = new Uri("https://localhost:5001"));
             services.AddControllers();
         }
 

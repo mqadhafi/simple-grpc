@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using CreditRatingService;
-using Grpc.Net.Client;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CreditRatingClient.Api.Controllers
@@ -9,13 +8,17 @@ namespace CreditRatingClient.Api.Controllers
     [ApiController]
     public class GreetersController : ControllerBase
     {
+        private readonly Greeter.GreeterClient _client;
+
+        public GreetersController(Greeter.GreeterClient client)
+        {
+            _client = client;
+        }
+
         [HttpGet("{name}")]
         public async Task<IActionResult> Get(string name)
         {
-            GrpcChannel channel = GrpcChannel.ForAddress("https://localhost:5001");
-            Greeter.GreeterClient greetingClient = new Greeter.GreeterClient(channel);
-            HelloRequest greeterRequest = new HelloRequest { Name = name };
-            HelloReply greeterResponse = await greetingClient.SayHelloAsync(greeterRequest);
+            HelloReply greeterResponse = await _client.SayHelloAsync(new HelloRequest { Name = name });
             return Ok(greeterResponse.Message);
         }
     }
