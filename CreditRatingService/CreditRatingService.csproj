@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\credit-rating-service.proto" GrpcServices="Server" />
   </ItemGroup>
